@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>弹幕发射</title>
+	<style>
+		body,ul,li{
+			margin: 0;
+			padding: 0;
+		}
+		#content{
+			position: relative;
+			width: 1400px;
+			height: 400px;
+			margin: 50px auto 0;
+			border: 1px solid #9999CC;
+			list-style: none;
+			overflow: hidden;
+		}
+		#content li{
+			position: absolute;
+			top:0;
+			left: 1400px;
+			width: 200px;
+			height: 30px;
+			font: 20px/30px '微软雅黑';
+		}
+		input{
+			display: block;
+			background: none;
+			border: 1px solid #6FB7B7;
+		}
+		.text{
+			width: 400px;
+			height: 40px;
+			margin: 20px auto 0;
+			padding-left: 10px;
+			font: normal 20px/40px '楷体';
+		}
+		#btn{
+			width: 320px;
+			margin: 20px auto 0;
+		}
+		#btn .sent{
+			float: left;
+			width: 150px;
+			height: 40px;
+			margin-right: 20px;
+			padding-left: 10px;
+			font: normal 20px/40px '楷体';
+		}
+		#btn .clear{
+			width: 150px;
+			height: 40px;
+			margin-right: 0;
+			font: normal 20px/40px '楷体';
+		}
+	</style>
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+		$(function () {
+			var arrColor=["#FF00FF","#BE77FF","#00FFFF","#1AFD9C","#F75000"];
+			var data=[
+					"快写点什么吧","今天天气真好","今年是狗年","发射弹幕",
+					"火箭队战绩联盟第一","javascript","Hello","努力奋斗","666666",
+				];
+			var $ul=$('#content');
+			var $sent=$('.sent');		//发射按钮
+			var $clear=$('.clear');		//清空按钮
+			var $text=$('.text');		//文本输入框
+			var timer=null;
+			var num=$ul.width();
+
+			randomData();
+			timer=setInterval(randomData, 2000);
+			$sent.click(function() {
+				move();
+			});
+			$text.keydown(function (ev) {
+				//console.log(ev.keyCode);
+				if(ev.keyCode == 13){
+					move();
+				}
+			});
+			$clear.click(function(event) {		//清除所有弹幕
+				$('#content li').remove();
+				clearInterval(timer);
+			});
+			function move() {		//弹幕运动函数
+				if($text.val() == ''){
+					alert('弹幕内容不能为空');
+				}else{
+					var $li=$('<li>'+$text.val()+'</li>');
+					$li.css({
+						color: arrColor[Math.floor(Math.random()*5)],
+						top: Math.floor(Math.random()*370)+'px',
+						height: 30,
+					});
+					$ul.append($li);
+					$text.val('');
+					$li.animate({left:-200}, 15000,function () {
+						$(this).remove();
+					});		
+				}
+			}
+			function randomData() {		//初始化随机生成弹幕
+				var $val=data[Math.floor(Math.random()*data.length)];
+				var $li=$('<li>'+$val+'</li>');
+				$li.css({
+					color: arrColor[Math.floor(Math.random()*5)],
+					top: Math.floor(Math.random()*370)+'px',
+					height: 30,
+				});
+				$ul.append($li);
+				$li.animate({left:-200}, 15000,function () {
+					$(this).remove();
+				});		
+			}
+
+		});
+	</script>
+</head>
+<body>
+	<ul id="content">
+		<!-- <li>hello</li> -->
+	</ul>
+	<input type="text" placeholder="说点什么？" value="" class="text">
+	<div id="btn">
+		<input type="button" value="发射" class="sent">
+		<input type="button" value="清空" class="clear">
+	</div>
+	
+</body>
+</html>
