@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>天气预报</title>
+	<style>
+		body,h1,h2,p,input{
+			margin: 0;
+			padding: 0;
+		}
+		body{
+			background: url(img/bg.jpg) no-repeat;
+		}
+		input{
+			border: none;
+		}
+		#wrap{
+			width: 900px;
+			margin: 50px auto 0;
+		}
+		#wrap header{
+			width: 100%;
+			height: 50px;
+			border-bottom: 1px solid #CCC9C9;
+		}
+		header h1{
+			width: 100%;
+			height: 100%;
+			font: normal 30px/50px '幼圆';
+			text-align: center;
+			color: #fff;
+		}
+		section{
+			width: 100%;
+		}
+		section h2{
+			width: 100%;
+			height: 30px;
+			padding: 20px 0;
+			text-align: center;
+			font: normal 20px/30px '微软雅黑';
+		}
+		section .buttons{
+			width: 100%;
+			height: 30px;
+			margin-top: 20px;
+			/*padding-left: 350px;*/
+			display: flex;
+			justify-content: center;
+		}
+		section .buttons .text{
+			width: 250px;
+			padding-left: 20px;
+			height: 30px;
+			font: normal 20px/30px '楷体';
+		}
+		section .buttons .search{
+			width: 60px;
+			height: 30px;
+			font: normal 20px/30px '楷体';
+			text-align: center;
+		}
+		section div{
+			width: 100%;
+		}
+		section div p{
+			width: 100%;
+			height: 30px;
+			text-align: center;
+			font: normal 20px/30px '楷体';
+		}
+		#snowPic{
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: url(img/snow1.png),url(img/snow2.png);
+			animation: snow 10s linear infinite;
+			pointer-events:none;
+		}
+		@keyframes snow{
+			0%{
+				background-position: 0 0,0 0;
+			}
+			100%{
+				background-position: 500px 500px,1000px 500px;
+			}
+		}
+	</style>
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="js/index.js"></script>
+</head>
+<body>
+	<div id="wrap">
+		<header>
+			<h1>城市天气预报</h1>
+		</header>
+		<section>
+			<div class="buttons">
+				<input type="text" placeholder="请输入要查询的城市" class="text">
+				<input type="button" value="搜索" class="search">
+			</div>
+			<h2>今天天气</h2>
+			<div>
+				<p>当前温度：</p>
+				<p>当前风向：</p>
+				<p>当前天气：</p>
+				<p>当前城市：</p>
+				<p>更新时间：</p>
+			</div>	
+		</section>
+	</div>
+	<div id="snowPic"></div>
+</body>
+</html>
