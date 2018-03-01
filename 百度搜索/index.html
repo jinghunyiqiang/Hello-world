@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>百度搜索</title>
+	<style>
+		body,ul,li,input{
+			margin: 0;
+			padding: 0;
+		}
+		body{
+			background: #D8D8EB;
+		}
+		.wrap{
+			width: 100%;
+			margin-top: 200px;
+		}
+		.wrap label{
+			display: block;
+			font:30px/50px '幼圆';
+			width: 100%;
+			text-align: center;
+		}
+		.wrap input{
+			display: block;
+			float: left;
+			width: 500px;
+			height: 50px;
+			margin: 0 auto;
+			font-size: 20px;
+			border: 1px solid #A7A5A5;
+			padding: 10px;
+			box-sizing: border-box;
+		}
+		.wrap .box{
+			width: 610px;
+			margin: 0 auto;
+
+		}
+		.clearfix:after{
+			display: table;
+			content: " ";
+			clear:both;
+		}
+		.wrap button{
+			float: left;
+			width: 100px;
+			height: 50px;
+			border: none;
+			background: #31C4DE;
+			color: #fff;
+			margin-left: 10px;
+			font: 20px/50px '幼圆';
+		}
+		#list{
+			list-style: none;
+			width: 500px;
+			/*margin: 0 auto;*/
+			margin-left: 463px;
+			border:1px solid #A7A5A5;
+			box-sizing: border-box;
+		}
+		#list li a{
+			display: block;
+			width: 100%;
+			height: 30px;
+			font: 16px/30px '迷你霹雳体';
+			text-indent: 10px;
+			text-decoration: none;
+		}
+		#list li a:hover{
+			background: #2CC5F3;
+			color: #000;
+		}
+		#list .active{
+			background: #2CC5F3;
+			color: #000;
+		}
+	</style>
+	<script>
+		function search(data) {
+			var oUl=document.querySelector('ul');
+			var html='';
+			var iNow=-1;
+			var oInp=document.querySelector('input');
+			if(data.s.length){
+				oUl.style.display='block';
+				for (var i = 0; i < data.s.length; i++) {
+					html+=`<li><a href="#">${data.s[i]}</a></li>`;
+				}
+				oUl.innerHTML=html;
+			}else{
+				oUl.style.display='none';
+			}
+			var aLi=oUl.querySelectorAll('li a');
+			oInp.onkeyup=function (ev) {
+				var ev=ev || window.event;
+				if(this.value != ''){
+					if(ev.keyCode == 40){	//↓
+						for (var i = 0; i < aLi.length; i++) {
+							aLi[i].className='';
+						}
+						iNow++;
+						aLi[iNow].className='active';
+						if(iNow == aLi.length-1){
+							iNow=-1;
+						}
+					}else if(ev.keyCode == 38){		//↑
+						if(iNow < 0){
+							iNow=aLi.length;
+						}
+						for (var i = 0; i < aLi.length; i++) {
+							aLi[i].className='';
+						}
+						iNow--;
+						aLi[iNow].className='active';
+						
+					}else if(ev.keyCode == 13){
+						if(iNow >=0 ){
+							var val=aLi[iNow].innerHTML;
+							window.location.href='https://www.baidu.com/s?wd='+val+'';
+						}
+					}
+				}	
+			}
+			for (var i = 0; i < aLi.length; i++) {
+				aLi[i].onmouseenter=function () {
+					for (var i = 0; i < aLi.length; i++) {
+						aLi[i].className='';
+					}
+					this.className='active';
+				}
+			}
+
+		}
+	</script>
+	<script>
+		window.onload=function () {
+			var oInp=document.querySelector('input');
+			var oUl=document.querySelector('ul');
+			var oBtn=document.querySelector('button');
+			var iNow=0;
+			oInp.onkeyup=function (ev) {
+				if(this.value != ''){
+					var oScript=document.createElement('script');
+					oScript.src='https://www.baidu.com/su?&wd='+this.value+'&p=3&cb=search&t=1516705448624';
+					document.body.appendChild(oScript);	
+				}else{
+					oUl.style.display='none';
+				}
+			};
+			oBtn.onclick=function () {
+				if(oInp.value != ''){
+					window.location.href='https://www.baidu.com/s?wd='+oInp.value+'';
+
+				}
+			}
+		}
+	</script>
+</head>
+<body>
+	<div class="wrap">
+		<label for="search">百度搜索</label>
+		<div class="box clearfix">
+			<input type="text" placeholder="请输入搜索内容" id="search">
+			<button>搜索</button>
+		</div>
+		<ul id="list">
+			<!-- <li><a href="#">许崇丽</a></li>
+			<li><a href="#">许崇丽</a></li>
+			<li><a href="#">许崇丽</a></li>
+			<li><a href="#">许崇丽</a></li>
+			<li><a href="#">许崇丽</a></li> -->
+		</ul>
+	</div>
+</body>
+</html>
